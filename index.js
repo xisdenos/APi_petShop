@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import winston from 'winston';
 import proprietarioRouter from './routes/proprietario.route.js';
-import animalRouter from './routes/animal.route.js'
+import animalRouter from './routes/animal.route.js';
+import servicoRouter from './routes/servico.route.js';
 
 const app = express();
 
@@ -34,7 +35,9 @@ app.use((err, req, res, next) => {
 });
 app.use("/proprietario", proprietarioRouter);
 app.use("/animal", animalRouter);
+app.use("/servico", servicoRouter);
 
+// Conection
 app.listen(9000, ()=>{
     console.log("Servidor iniciado na porta 9000")
 });

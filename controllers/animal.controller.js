@@ -1,10 +1,12 @@
+import serviceAnimal from '../services/animal.service.js'
+
 async function createAnimal(req, res, next){
     try{
         let animal = req.body;
-        if(!animal.nome || !animal.tipo){
+        if(!animal.nome || !animal.tipo || !animal.proprietarioId){
             throw new Error("Os campos precisam estar preenchidos corretamente!");
         }
-        res.send("que menino bunito")
+        res.send(await serviceAnimal.createAnimal(animal))
         logger.info(`POST /proprietario / ${JSON.stringify(proprietario)}`)
     } catch(err) {
         next(err);
@@ -13,10 +15,11 @@ async function createAnimal(req, res, next){
 
 async function updateAnimal(req, res, next){
     try{
-        let proprietario = req.body;
-        if(!proprietario.proprietario_id || !proprietario.nome || !proprietario.telefone){
+        let animal = req.body;
+        if(!animal.animalId || !animal.nome || !animal.tipo || !animal.proprietarioId){
             throw new Error("Os campos precisam estar preenchidos corretamente!");
         }
+        res.send(await serviceAnimal.updateAnimal(animal))
 
     } catch(err) {
         next(err);
@@ -25,7 +28,7 @@ async function updateAnimal(req, res, next){
 
 async function deleteAnimal(req, res, next){
     try{
-
+        res.send(await serviceAnimal.deleteAnimal(req.params.id))
     } catch(err) {
         next(err);
     }
@@ -33,7 +36,8 @@ async function deleteAnimal(req, res, next){
 
 async function consultasAnimal(req, res, next){
     try{
-
+        res.send(await serviceAnimal.getAnimals());
+        logger.inf(`GET /animal`)
     } catch(err) {
         next(err);
     }
@@ -41,7 +45,8 @@ async function consultasAnimal(req, res, next){
 
 async function consultaAnimal(req, res, next){
     try{
-
+        res.send(await serviceAnimal.getAnimal(req.params.id));
+        logger.info(`Get /proprietario`)
     } catch(err) {
         next(err);
     }
